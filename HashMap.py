@@ -7,13 +7,13 @@ Created on Thu Jan 18 18:03:30 2024
 
 class HashMap:
     def __init__(self):
-        self.size = 6
+        self.size = 10
         self.map = [None] * self.size
         
     def getHash(self, key):
-        hash = 0
+        hash = 1234
         for char in str(key):
-            hash += ( ( 3 * ord(char) ) / 2 )
+            hash = (hash * 15) ^ ord(char)
             return hash % self.size
         
     def add(self, key, value):
