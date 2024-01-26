@@ -8,7 +8,7 @@ Created on Thu Jan 18 13:31:26 2024
 class Package:
     
     
-    def __init__(self,package_id, address, city, state, zip_code, deadline, weight):
+    def __init__(self,package_id, address, city, state, zip_code, deadline, weight, notes):
         self.package_id = package_id
         self.address = address
         self.city = city
@@ -16,6 +16,7 @@ class Package:
         self.zip_code = zip_code
         self.deadline = deadline
         self.weight = weight
+        self.notes = "none" if notes is None else notes
         
     def GetPackageId(self):
         return self.package_id
@@ -37,3 +38,6 @@ class Package:
     
     def GetWeight(self):
         return self.weight
+    
+    def GetNotes(self):
+        return self.notes

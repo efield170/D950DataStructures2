@@ -14,7 +14,7 @@ class HashMap:
         hash = 1234
         for char in str(key):
             hash = (hash * 15) ^ ord(char)
-            return hash % self.size
+        return hash % self.size
         
     def add(self, key, value):
         key_hash = self.getHash(key)
@@ -42,7 +42,7 @@ class HashMap:
         return None
         
     def delete(self, key):
-        key_hash = self.get_hash(key)
+        key_hash = self.getHash(key)
         
         if self.map[key_hash] is None:
             return False

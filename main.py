@@ -6,8 +6,23 @@ Created on Thu Jan 18 13:31:58 2024
 
 """
 from HashMap import HashMap
+from Package import Package
 import pandas as pd
 
-package_manifest = pd.read_csv('package_file.csv')
 
-print(package_manifest.head())
+
+package_manifest_df = pd.read_csv('package_file.csv')
+
+package_manifest = []
+
+print(package_manifest_df.head())
+
+for i, row in package_manifest_df.iterrows():
+    package_instance = Package(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7])
+    package_manifest.append(package_instance)
+    
+hash_map_manifest = HashMap()
+
+for package in package_manifest:
+    hash_map_manifest.add(package.GetPackageId(), package)
+    
