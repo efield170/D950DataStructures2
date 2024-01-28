@@ -52,3 +52,14 @@ class HashMap:
                 self.map[key_hash].pop(i)
                 return True
         
+    def is_empty(self):
+        for bucket in self.map:
+            if bucket is not None:
+                return False
+        return True
+        
+        
+        
+        
+        
+        
