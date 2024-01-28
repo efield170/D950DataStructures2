@@ -43,6 +43,11 @@ truck_one = Truck()
 truck_two = Truck()
 truck_three = Truck()
 
+print(truck_one.find_next_stop())
+
+truck_one.driver_manifest.add(1, "package")
+
+print(truck_one.find_next_stop())
 
 
 ####################################################################

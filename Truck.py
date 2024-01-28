@@ -24,6 +24,10 @@ class Truck:
             return "HUB"
         
         if self.air_manifest.is_empty():
+            
+            for key, package in self.driver_manifest:
+                print("test")
+            
             return "next ground stop"
         
         else: 
