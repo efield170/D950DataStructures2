@@ -29,12 +29,23 @@ for package in package_manifest:
     
 ###################################################################
 
+##### Read distance table and #####################################
+
+distance_table = pd.read_csv('Real_Distance_Table.csv', index_col=0)
+
+#print(distance_table.loc['6351 South 900 East','HUB'])
+
+###################################################################
+
 ####   create the three truck instances and load them
 
 truck_one = Truck()
 truck_two = Truck()
 truck_three = Truck()
 
+
+
+####################################################################
 
 
 
