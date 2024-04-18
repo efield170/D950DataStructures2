@@ -29,11 +29,6 @@ for package in package_manifest:
     
 ###################################################################
 
-##### Read distance table and #####################################
-
-distance_table = pd.read_csv('Real_Distance_Table.csv', index_col=0)
-
-#print(distance_table.loc['6351 South 900 East','HUB']) 
 
 ###################################################################
 
@@ -43,11 +38,19 @@ truck_one = Truck()
 truck_two = Truck()
 truck_three = Truck()
 
-print(truck_one.find_next_stop())
-
-truck_one.driver_manifest.add(1, "package")
 
 print(truck_one.find_next_stop())
+
+truck_one.driver_manifest.add(hash_map_manifest.get(5).GetPackageId(), hash_map_manifest.get(5))
+truck_one.driver_manifest.add(hash_map_manifest.get(7).GetPackageId(), hash_map_manifest.get(7))
+
+
+
+print(truck_one.find_next_stop())
+print(truck_one.find_next_stop())
+print(truck_one.find_next_stop())
+
+
 
 
 ####################################################################

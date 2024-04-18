@@ -59,7 +59,19 @@ class HashMap:
         return True
         
         
+    def __iter__(self):
+        for item in self.map:
+            if item is not None:
+                for key, value in item:
+                    yield key,value
         
         
-        
+    def __contains__(self, key):
+        key_hash = self.getHash(key)
+        bucket = self.map[key_hash]
+        if bucket is not None:
+            for (k, _) in bucket:
+                if k == key:
+                    return True
+            return False
         
