@@ -14,19 +14,21 @@ import datetime as dt
 ### code to read package file, initialzie hash map and populate it###### 
 
 
-package_manifest_df = pd.read_csv('package_file.csv')
+package_manifest_df = pd.read_csv('package_file.csv', header= None)
 
 package_manifest = []
 
 
 for i, row in package_manifest_df.iterrows():
-    package_instance = Package(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7])
+    package_instance = Package(row[0],row[1],row[2],row[3],row[4],row[5],row[6], row[7])
     package_manifest.append(package_instance)
     
 hash_map_manifest = HashMap()
 
 for package in package_manifest:
     hash_map_manifest.add(package.GetPackageId(), package)
+    
+##print("checking p[ackage ID 1 existence:", hash_map_manifest.get(15))
     
 ###################################################################
 
@@ -40,20 +42,37 @@ truck_two = Truck()
 truck_three = Truck()
 truck_one.start_time = dt.datetime(2024, 4, 19, 8, 0 ,0)
 
-print(f'current location {truck_one.current_location}')
+#print(f'current location {truck_one.current_location}')
 #print(truck_one.find_next_stop())
-print(truck_one.miles_driven)
-print(truck_one.total_time_elapsed)
+#print(truck_one.miles_driven)
+#print(truck_one.total_time_elapsed)
 
+### POPULATE TRUCK 1###
 
-truck_one.driver_manifest.add(hash_map_manifest.get(5).GetPackageId(), hash_map_manifest.get(5))
-truck_one.driver_manifest.add(hash_map_manifest.get(7).GetPackageId(), hash_map_manifest.get(7))
-truck_one.driver_manifest.add(hash_map_manifest.get(35).GetPackageId(), hash_map_manifest.get(35))
-truck_one.driver_manifest.add(hash_map_manifest.get(13).GetPackageId(), hash_map_manifest.get(13))
-truck_one.driver_manifest.add(hash_map_manifest.get(28).GetPackageId(), hash_map_manifest.get(28))
+truck_one.air_manifest.add(hash_map_manifest.get(15).GetPackageId(), hash_map_manifest.get(15))
+truck_one.air_manifest.add(hash_map_manifest.get(34).GetPackageId(), hash_map_manifest.get(34))
+truck_one.air_manifest.add(hash_map_manifest.get(16).GetPackageId(), hash_map_manifest.get(16))
+truck_one.air_manifest.add(hash_map_manifest.get(20).GetPackageId(), hash_map_manifest.get(20))
+truck_one.air_manifest.add(hash_map_manifest.get(21).GetPackageId(), hash_map_manifest.get(21))
+truck_one.air_manifest.add(hash_map_manifest.get(13).GetPackageId(), hash_map_manifest.get(13))
+truck_one.air_manifest.add(hash_map_manifest.get(39).GetPackageId(), hash_map_manifest.get(39))
+truck_one.air_manifest.add(hash_map_manifest.get(8).GetPackageId(), hash_map_manifest.get(8))
+truck_one.air_manifest.add(hash_map_manifest.get(30).GetPackageId(), hash_map_manifest.get(30))
+truck_one.air_manifest.add(hash_map_manifest.get(5).GetPackageId(), hash_map_manifest.get(5))
+truck_one.air_manifest.add(hash_map_manifest.get(9).GetPackageId(), hash_map_manifest.get(9))
+truck_one.air_manifest.add(hash_map_manifest.get(37).GetPackageId(), hash_map_manifest.get(37))
+truck_one.air_manifest.add(hash_map_manifest.get(1).GetPackageId(), hash_map_manifest.get(1))
+truck_one.air_manifest.add(hash_map_manifest.get(14).GetPackageId(), hash_map_manifest.get(14))
+
+print(truck_one.driver_manifest.print_map())
+
+truck_one.driver_manifest.add(hash_map_manifest.get(19).GetPackageId(), hash_map_manifest.get(19))
+truck_one.driver_manifest.add(hash_map_manifest.get(17).GetPackageId(), hash_map_manifest.get(17))
 
 
 #print(truck_one.driver_manifest.print_map())
+#print(truck_one.air_manifest.print_map())
+
 #print(f'current location {truck_one.current_location}')
 
 # print(truck_one.find_next_stop())

@@ -47,10 +47,14 @@ class HashMap:
         if self.map[key_hash] is None:
             return False
         
-        for i in range(0, len(self.map[key_hash])):
+        for i in range(len(self.map[key_hash])):
             if self.map[key_hash][i][0] == key:
                 self.map[key_hash].pop(i)
+                # Check if the bucket is now empty and set it to None if so
+                if not self.map[key_hash]:  # Checks if list is empty
+                    self.map[key_hash] = None
                 return True
+        return False
         
     def is_empty(self):
         for bucket in self.map:

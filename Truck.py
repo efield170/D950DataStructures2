@@ -27,12 +27,14 @@ class Truck:
         
     def find_next_stop(self):
        if self.air_manifest.is_empty() and self.driver_manifest.is_empty():
+           #print("both manifests are empty")
            # put in sperate function for distance self.miles_driven += self.distance_table.loc["HUB", self.current_location]
            #self.current_package_id = None
            #print("I got called")
            return "HUB"
 
        if self.air_manifest.is_empty():
+           #print("air maifest is emtpy")
            shortest_distance = float('inf')  # Use positive infinity for initialization
            next_stop = None
 
@@ -40,7 +42,7 @@ class Truck:
                distance = self.distance_table.loc[package.GetAddress(), self.current_location]
                if math.isnan(distance):
                    distance = self.distance_table.loc[self.current_location, package.GetAddress()]
-               if distance < shortest_distance:
+               if distance <= shortest_distance:
                    shortest_distance = distance
                    next_stop = package.GetPackageId()
 
@@ -52,12 +54,34 @@ class Truck:
                 #self.current_package_id = next_stop
                 return new_address 
            else:
+              
                #self.current_package_id = None
                #print("now I got called")
                return "HUB"
 
        else:
-           return "next air stop"
+          # print("I am called")
+           shortest_distance = float('inf')
+           next_stop = None
+           
+           for key, package in self.air_manifest:
+               distance = self.distance_table.loc[package.GetAddress(), self.current_location]
+               if math.isnan(distance):
+                   distance = self.distance_table.loc[self.current_location, package.GetAddress()]
+                   #print(f'Package ID: {package.GetPackgeID()}, Distance: {distance}')
+               if distance <= shortest_distance:
+                   shortest_distance = distance
+                   next_stop = package.GetPackageId()
+                   #print(f"Shortest distance updated: {shortest_distance}, Next Stop: {next_stop}")
+                   
+           if next_stop in self.air_manifest:
+               new_address = self.air_manifest.get(next_stop).GetAddress()
+               return new_address
+           
+           
+           
+           
+           
        
 
        
@@ -75,20 +99,20 @@ class Truck:
         for key in keys_to_delete:
             if key in self.driver_manifest:
                 self.save_package_tracking_info(key)
-                print(f'deleting key {key}')
+                #print(f'deleting key {key}')
                 self.driver_manifest.delete(key)
             if key in self.air_manifest:
                 self.save_package_tracking_info(key)
-
+                #print(f'deleting key {key}')
                 self.air_manifest.delete(key)
                 
                 
     def drive_to_stop(self, nextStop):
-        print(f'next stop: {nextStop}, current location: {self.current_location}')
+       # print(f'next stop: {nextStop}, current location: {self.current_location}')
         distance = self.distance_table.loc[nextStop, self.current_location]
         if math.isnan(distance):
             distance = self.distance_table.loc[self.current_location, nextStop]
-        print(f"Distance: {distance}")
+       # print(f"Distance: {distance}")
         if distance > 0:
             self.miles_driven += distance
             self.current_location = nextStop
@@ -97,7 +121,7 @@ class Truck:
             
             
     def complete_stop(self, nextStop):
-        nextStop = self.find_next_stop()
+        #nextStop = self.find_next_stop()
         self.drive_to_stop(nextStop)
         self.deliver_package(nextStop)
         #save package delivery info 
@@ -124,6 +148,15 @@ class Truck:
             delivery_time = "Still out for delivery"
             self.package_status[key] = [key, location, delivery_time]
        # print(self.package_status)
+       
+        for key, package in self.air_manifest:
+            package_id = key
+            if self.current_location == "HUB":
+                location = "HUB"
+            else:
+                location = "En Route"
+            delivery_time = "Still out for delivery"
+            self.package_status[key] = [key, location, delivery_time]
             
     def print_package_tracking_info(self):
         print(self.package_status)
