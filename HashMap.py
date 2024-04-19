@@ -73,5 +73,14 @@ class HashMap:
             for (k, _) in bucket:
                 if k == key:
                     return True
-            return False
+        return False
         
+    def print_map(self):
+        print("Current HashMap:")
+        for index, bucket in enumerate(self.map):
+            if bucket:
+                print(f"Bucket {index}:")
+                for key, value in bucket:
+                    print(f"  - Key: {key}, Value: {value}")
+            else:
+                print(f"Bucket {index}: Empty")

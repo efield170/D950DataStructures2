@@ -38,29 +38,48 @@ truck_one = Truck()
 truck_two = Truck()
 truck_three = Truck()
 
+print(f'current location {truck_one.current_location}')
+#print(truck_one.find_next_stop())
+print(truck_one.miles_driven)
+print(truck_one.total_time_elapsed)
 
-print(truck_one.find_next_stop())
 
 truck_one.driver_manifest.add(hash_map_manifest.get(5).GetPackageId(), hash_map_manifest.get(5))
 truck_one.driver_manifest.add(hash_map_manifest.get(7).GetPackageId(), hash_map_manifest.get(7))
 
-
-#print(truck_one.miles_driven)
-print(truck_one.find_next_stop())
-truck_one.deliver_package(truck_one.find_next_stop())
-
+#print(truck_one.driver_manifest.print_map())
+#print(f'current location {truck_one.current_location}')
 
 print(truck_one.find_next_stop())
-truck_one.deliver_package(truck_one.find_next_stop())
+stop = truck_one.find_next_stop()
+truck_one.drive_to_stop(stop)
+truck_one.deliver_package(stop)
+print(truck_one.miles_driven)
+print(truck_one.total_time_elapsed)
+print(f'current location {truck_one.current_location}')
 
-#print(truck_one.miles_driven)
+#print(truck_one.driver_manifest.print_map())
 
 print(truck_one.find_next_stop())
-truck_one.deliver_package(truck_one.find_next_stop())
+stop2 = truck_one.find_next_stop()
+truck_one.drive_to_stop(stop2)
+truck_one.deliver_package(stop2)
+print(truck_one.miles_driven)
+print(truck_one.total_time_elapsed)
+#print(truck_one.driver_manifest.print_map())
 
-#print(truck_one.miles_driven)
 
+print(f'current location {truck_one.current_location}')
 
+print("stop 3 return to hub")
+print(truck_one.find_next_stop())
+stop3 = truck_one.find_next_stop()
+truck_one.drive_to_stop(stop3)
+#truck_one.deliver_package(stop3)
+print(truck_one.miles_driven)
+print(truck_one.total_time_elapsed)
+
+print(f'current location {truck_one.current_location}')
 
 
 
