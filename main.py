@@ -45,10 +45,21 @@ truck_one.driver_manifest.add(hash_map_manifest.get(5).GetPackageId(), hash_map_
 truck_one.driver_manifest.add(hash_map_manifest.get(7).GetPackageId(), hash_map_manifest.get(7))
 
 
+#print(truck_one.miles_driven)
+print(truck_one.find_next_stop())
+truck_one.deliver_package(truck_one.find_next_stop())
+
 
 print(truck_one.find_next_stop())
+truck_one.deliver_package(truck_one.find_next_stop())
+
+#print(truck_one.miles_driven)
+
 print(truck_one.find_next_stop())
-print(truck_one.find_next_stop())
+truck_one.deliver_package(truck_one.find_next_stop())
+
+#print(truck_one.miles_driven)
+
 
 
 

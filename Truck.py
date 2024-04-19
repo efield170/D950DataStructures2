@@ -16,6 +16,7 @@ class Truck:
         self.total_time_elapsed = None
         self.air_manifest = HashMap()
         self.driver_manifest = HashMap()
+        self.current_package_id = None;
         self.distance_table = pd.read_csv('Real_Distance_Table.csv', index_col=0)
 
         
@@ -23,6 +24,8 @@ class Truck:
         
     def find_next_stop(self):
        if self.air_manifest.is_empty() and self.driver_manifest.is_empty():
+           # put in sperate function for distance self.miles_driven += self.distance_table.loc["HUB", self.current_location]
+           self.current_package_id = None
            return "HUB"
 
        if self.air_manifest.is_empty():
@@ -36,8 +39,25 @@ class Truck:
 
            if next_stop in self.driver_manifest:
                 new_address = self.driver_manifest.get(next_stop).GetAddress()
-                self.driver_manifest.delete(next_stop)
-                return new_address
+                # put in seperate function for distance self.miles_driven += self.distance_table.loc[new_address, self.current_location]
+                # put in seperate function for deleting self.driver_manifest.delete(next_stop)
+               # self.current_location = new_address
+                #self.current_package_id = next_stop
+                return new_address # return a package id 
+           else:
+               self.current_package_id = None
+               return "HUB"
 
        else:
            return "next air stop"
+       
+        
+    def deliver_package(self, nextStop):
+        
+        for key,package in self.driver_manifest:
+            if package.GetAddress() == nextStop:
+                self.driver_manifest.delete(key)
+                
+        for key,package in self.air_manifest:
+            if package.GetAddress() == nextStop:
+                self.air_manifest.delete(key)
