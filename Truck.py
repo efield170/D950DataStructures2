@@ -18,6 +18,7 @@ class Truck:
         self.total_time_elapsed = dt.timedelta()
         self.air_manifest = HashMap()
         self.driver_manifest = HashMap()
+        self.delivered_packages = [[]]
         #self.current_package_id = None;
         self.distance_table = pd.read_csv('Real_Distance_Table.csv', index_col=0)
 
@@ -88,6 +89,24 @@ class Truck:
             self.current_location = nextStop
             drive_time = dt.timedelta(hours = distance / 18)
             self.total_time_elapsed += (drive_time)
+            
+            
+    def complete_stop(self, nextStop):
+        nextStop = self.find_next_stop()
+        self.drive_to_stop(nextStop)
+        self.deliver_package(nextStop)
+        #save package delivery info 
+        
+    def run_route(self):
+        while True:
+            next_stop = self.find_next_stop()
+            if next_stop == "HUB":
+                self.drive_to_stop(next_stop)
+                break
+            else:
+                self.complete_stop(next_stop)
+                
+        
         
         
         
