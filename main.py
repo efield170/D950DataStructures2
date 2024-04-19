@@ -9,6 +9,7 @@ from Truck import Truck
 from HashMap import HashMap
 from Package import Package
 import pandas as pd
+import datetime as dt
 
 ### code to read package file, initialzie hash map and populate it###### 
 
@@ -37,6 +38,7 @@ for package in package_manifest:
 truck_one = Truck()
 truck_two = Truck()
 truck_three = Truck()
+truck_one.start_time = dt.datetime(2024, 4, 19, 8, 0 ,0)
 
 print(f'current location {truck_one.current_location}')
 #print(truck_one.find_next_stop())
@@ -46,6 +48,10 @@ print(truck_one.total_time_elapsed)
 
 truck_one.driver_manifest.add(hash_map_manifest.get(5).GetPackageId(), hash_map_manifest.get(5))
 truck_one.driver_manifest.add(hash_map_manifest.get(7).GetPackageId(), hash_map_manifest.get(7))
+truck_one.driver_manifest.add(hash_map_manifest.get(35).GetPackageId(), hash_map_manifest.get(35))
+truck_one.driver_manifest.add(hash_map_manifest.get(13).GetPackageId(), hash_map_manifest.get(13))
+truck_one.driver_manifest.add(hash_map_manifest.get(28).GetPackageId(), hash_map_manifest.get(28))
+
 
 #print(truck_one.driver_manifest.print_map())
 #print(f'current location {truck_one.current_location}')
@@ -87,8 +93,7 @@ truck_one.run_route()
 
 print(truck_one.miles_driven)
 print(truck_one.total_time_elapsed)
-
-
+truck_one.print_package_tracking_info()
 
 ####################################################################
 

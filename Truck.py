@@ -18,7 +18,7 @@ class Truck:
         self.total_time_elapsed = dt.timedelta()
         self.air_manifest = HashMap()
         self.driver_manifest = HashMap()
-        self.delivered_packages = [[]]
+        self.package_status = {}
         #self.current_package_id = None;
         self.distance_table = pd.read_csv('Real_Distance_Table.csv', index_col=0)
 
@@ -39,7 +39,7 @@ class Truck:
            for key, package in self.driver_manifest:
                distance = self.distance_table.loc[package.GetAddress(), self.current_location]
                if math.isnan(distance):
-                   distance = self.distance_table.loc[self.current_location, package.getAddress()]
+                   distance = self.distance_table.loc[self.current_location, package.GetAddress()]
                if distance < shortest_distance:
                    shortest_distance = distance
                    next_stop = package.GetPackageId()
@@ -59,6 +59,8 @@ class Truck:
        else:
            return "next air stop"
        
+
+       
         
     def deliver_package(self, nextStop):
         keys_to_delete = []
@@ -72,9 +74,12 @@ class Truck:
         
         for key in keys_to_delete:
             if key in self.driver_manifest:
+                self.save_package_tracking_info(key)
                 print(f'deleting key {key}')
                 self.driver_manifest.delete(key)
             if key in self.air_manifest:
+                self.save_package_tracking_info(key)
+
                 self.air_manifest.delete(key)
                 
                 
@@ -98,6 +103,7 @@ class Truck:
         #save package delivery info 
         
     def run_route(self):
+        self.build_package_tracking_info()
         while True:
             next_stop = self.find_next_stop()
             if next_stop == "HUB":
@@ -105,6 +111,33 @@ class Truck:
                 break
             else:
                 self.complete_stop(next_stop)
+                
+                
+                
+    def build_package_tracking_info(self):
+        for key, package in self.driver_manifest:
+            package_id = key
+            if self.current_location == "HUB":
+                location = "HUB"
+            else:
+                location = "En Route"
+            delivery_time = "Still out for delivery"
+            self.package_status[key] = [key, location, delivery_time]
+       # print(self.package_status)
+            
+    def print_package_tracking_info(self):
+        print(self.package_status)
+        
+        
+                
+                
+    def save_package_tracking_info(self, key_to_deliver):
+        for key, value in self.package_status.items():
+            if key == key_to_deliver:
+                self.package_status[key] = [key, "Delivered", (self.start_time + self.total_time_elapsed)]
+            if value[2] == "HUB":
+                self.package_status[key][2] == "En Route"
+        
                 
         
         
