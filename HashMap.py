@@ -5,34 +5,34 @@ Created on Thu Jan 18 18:03:30 2024
 @author: efiel
 """
 
-class HashMap:
+class HashMap: #custom defined hash map data strucutre to store package info
     def __init__(self):
         self.size = 10
         self.map = [None] * self.size
         
-    def getHash(self, key):
+    def getHash(self, key): #function to create a hash function
         hash = 1234
         for char in str(key):
             hash = (hash * 15) ^ ord(char)
         return hash % self.size
         
-    def add(self, key, value):
-        key_hash = self.getHash(key)
-        key_value = [key, value]
+    # def add(self, key, value): #a
+    #     key_hash = self.getHash(key)
+    #     key_value = [key, value]
         
-        if self.map[key_hash] is None:
-            self.map[key_hash] = list([key_value])
-            return True
-        else:
-            for pair in self.map[key_hash]:
-                if pair[0] == key:
-                    pair[1] = value
-                    return True
-            self.map[key_hash].append(key_value)
-            return True
+    #     if self.map[key_hash] is None:
+    #         self.map[key_hash] = list([key_value])
+    #         return True
+    #     else:
+    #         for pair in self.map[key_hash]:
+    #             if pair[0] == key:
+    #                 pair[1] = value
+    #                 return True
+    #         self.map[key_hash].append(key_value)
+    #         return True
         
         
-    def get(self, key):
+    def get(self, key): #get function to fulfill part B
         key_hash = self.getHash(key)
         
         if self.map[key_hash] is not None:
@@ -63,14 +63,14 @@ class HashMap:
         return True
         
         
-    def __iter__(self):
+    def __iter__(self): #defined to support itteration 
         for item in self.map:
             if item is not None:
                 for key, value in item:
                     yield key,value
         
         
-    def __contains__(self, key):
+    def __contains__(self, key): #defined so I could use the in keyworkd
         key_hash = self.getHash(key)
         bucket = self.map[key_hash]
         if bucket is not None:
@@ -79,7 +79,7 @@ class HashMap:
                     return True
         return False
         
-    def print_map(self):
+    def print_map(self): #print function used during testing and development
         print("Current HashMap:")
         for index, bucket in enumerate(self.map):
             if bucket:
@@ -89,7 +89,7 @@ class HashMap:
             else:
                 print(f"Bucket {index}: Empty")
                 
-    def add(self, key, value):
+    def add(self, key, value):  #updated add function to add to existing hash_maps or update them
         key_hash = self.getHash(key)
         key_value = [key, value]
         

@@ -5,7 +5,8 @@ Created on Thu Jan 18 13:31:26 2024
 @author: efiel
 """
 
-class Package:
+class Package: #basic class to hold our package data and save them as an object
+               #inside of our hashMap data structure
     
     
     def __init__(self,package_id, address, city, state, zip_code, deadline, weight, notes):
