@@ -2,26 +2,30 @@
 
 from Truck import Truck
 from HashMap import HashMap
+#import Pandas as pd
 from Package import Package
-import pandas as pd
+
+from Pandaz import Pandaz
 import datetime as dt
 
 
 
 def main():
     
+   # pd = Pandaz()
     package_tracking_manifest = HashMap() #used to store all delivery info
 
-
-    package_manifest_df = pd.read_csv('package_file.csv', header= None)
+    
+    package_manifest_df = Pandaz.read_csv('package_file.csv')
     
     package_manifest = [] #used to store the days packages 
     
     #load packages into the system
-    for i, row in package_manifest_df.iterrows():
-        package_instance = Package(row[0],row[1],row[2],row[3],row[4],row[5],row[6], row[7])
+    for row in package_manifest_df:
+        package_instance = Package(*row)
         package_manifest.append(package_instance)
-        
+     
+    #print(package_manifest)
     hash_map_manifest = HashMap()
     
     for package in package_manifest:
@@ -32,14 +36,22 @@ def main():
     chosen_day = dt.datetime(2024,4,19)
     
     truck_one = Truck()
+    truck_one.distance_table = Pandaz.read_csv("Real_Distance_table.csv")
+    print(f"distance table type: {type(truck_one.distance_table)}")
+    #print("distance table data: " + truck_one.distance_table.print_map())
     truck_two = Truck()
+    truck_two.distance_table = Pandaz.read_csv("Real_Distance_table.csv")
+
     truck_three = Truck()
+    truck_three.distance_table = Pandaz.read_csv("Real_Distance_table.csv")
+
     truck_one.start_time = dt.datetime(2024, 4, 19, 8, 0 ,0)
     truck_two.start_time = dt.datetime(2024, 4, 19, 9, 5 ,0)
     
     
     ### POPULATE TRUCK 1 with work ###
-    
+  #  hash_map_manifest.print_map()
+    #print(hash_map_manifest.get(4))
     truck_one.air_manifest.add(hash_map_manifest.get(15).GetPackageId(), hash_map_manifest.get(15))
     truck_one.air_manifest.add(hash_map_manifest.get(34).GetPackageId(), hash_map_manifest.get(34))
     truck_one.air_manifest.add(hash_map_manifest.get(16).GetPackageId(), hash_map_manifest.get(16))

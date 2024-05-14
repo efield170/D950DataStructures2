@@ -37,7 +37,25 @@ class HashMap: #custom defined hash map data strucutre to store package info
         
         if self.map[key_hash] is not None:
             for value_pair in self.map[key_hash]:
-                if value_pair[0] == key:
+               # print(f'{key} value: {value_pair} ')
+
+                if int(value_pair[0]) == key:
+                   # print("inside get function")
+
+                    return value_pair[1]
+        return None
+    
+    
+    def find(self, key): #get function to fulfill part B
+        key_hash = self.getHash(key)
+        
+        if self.map[key_hash] is not None:
+            for value_pair in self.map[key_hash]:
+               # print(f'{key} value: {value_pair} ')
+
+                if (value_pair[0]) == key:
+                   # print("inside get function")
+
                     return value_pair[1]
         return None
         
@@ -94,7 +112,7 @@ class HashMap: #custom defined hash map data strucutre to store package info
         key_value = [key, value]
         
         if self.map[key_hash] is None:
-            self.map[key_hash] = list([key_value])
+            self.map[key_hash] = ([key_value])
             return True
         else:
             for pair in self.map[key_hash]:
@@ -103,3 +121,12 @@ class HashMap: #custom defined hash map data strucutre to store package info
                     return True
             self.map[key_hash].append(key_value)
             return True
+        
+    # def get_distance(self, start, end):
+    #     if self.distance_table is not None:
+    #         start_map = self.distance_table.get(start)
+    #         if start_map is not None:
+    #             distance = start_map.get(end)
+    #             if distance is not None:
+    #                 return distance
+    #     return None

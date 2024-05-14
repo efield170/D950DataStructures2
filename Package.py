@@ -19,6 +19,12 @@ class Package: #basic class to hold our package data and save them as an object
         self.weight = weight
         self.notes = "none" if notes is None else notes
         
+    def __repr__(self):
+        return f"Package(ID={self.package_id}, Address={self.address})"
+    
+    def __str__(self):
+        return f"Package {self.package_id} to address {self.address}"
+        
     def GetPackageId(self):
         return self.package_id
     

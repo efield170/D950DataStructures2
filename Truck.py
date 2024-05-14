@@ -5,7 +5,8 @@ Created on Thu Jan 18 13:31:37 2024
 @author: efiel
 """
 from HashMap import HashMap
-import pandas as pd
+#import pandas as pd
+from Pandaz import Pandaz
 import datetime as dt
 import math
 
@@ -19,8 +20,8 @@ class Truck: #I decided an OOP approach would be the easiest/cleanest method
         self.air_manifest = HashMap() #Holds all packages with an ealry delivery time loaded on truck
         self.driver_manifest = HashMap() #Holds all EOD packages loaded on truck
         self.package_status = HashMap() #Holds all delivery info for this truck
-        self.distance_table = pd.read_csv('Real_Distance_Table.csv', index_col=0)
-
+        self.distance_table = Pandaz.load_distance_table("Real_Distance_Table.csv")
+        
         
         
     def find_next_stop(self): #nearest neighbor algo to find next stop and return the address as a string
@@ -32,9 +33,9 @@ class Truck: #I decided an OOP approach would be the easiest/cleanest method
            next_stop = None
 
            for key, package in self.driver_manifest:  #iterate over ground manifest to find the next shortest distance stop
-               distance = self.distance_table.loc[package.GetAddress(), self.current_location]
+               distance = Pandaz.get_distance(package.GetAddress(), self.current_location)
                if math.isnan(distance):
-                   distance = self.distance_table.loc[self.current_location, package.GetAddress()]
+                   distance = self.get_distance(self.current_location, package.GetAddress())
                if distance <= shortest_distance:
                    shortest_distance = distance
                    next_stop = package.GetPackageId()
@@ -50,16 +51,17 @@ class Truck: #I decided an OOP approach would be the easiest/cleanest method
            next_stop = None
            
            for key, package in self.air_manifest:
-               distance = self.distance_table.loc[package.GetAddress(), self.current_location]
+               print(type(self.distance_table))
+               distance = Pandaz.get_distance(package.GetAddress(), self.current_location)
                if math.isnan(distance):
-                   distance = self.distance_table.loc[self.current_location, package.GetAddress()]
+                   distance = Pandaz.get_distance(self.current_location, package.GetAddress())
                if distance <= shortest_distance:
                    shortest_distance = distance
                    next_stop = package.GetPackageId()
                    
            if next_stop in self.air_manifest:
-               new_address = self.air_manifest.get(next_stop).GetAddress()
-               return new_address
+               new_address = self.air_manifest.get(next_stop)
+               return new_address 
            
            
            
@@ -89,9 +91,9 @@ class Truck: #I decided an OOP approach would be the easiest/cleanest method
                 
                 
     def drive_to_stop(self, nextStop): #this function handles adding the distance and time for each delivery
-        distance = self.distance_table.loc[nextStop, self.current_location]
-        if math.isnan(distance): #find the distance between the two stops by finding which orientation provides a value
-            distance = self.distance_table.loc[self.current_location, nextStop]
+        distance = Pandaz.get_distance(nextStop, self.current_location)
+        if distance is None or math.isnan(distance): #find the distance between the two stops by finding which orientation provides a value
+            distance = Pandaz.get_distance(self.current_location, nextStop)
         if distance > 0: #if distance is not negative update time elapsed, current stop and miles
             self.miles_driven += distance
             self.current_location = nextStop
@@ -164,8 +166,12 @@ class Truck: #I decided an OOP approach would be the easiest/cleanest method
                 
         
         
-        
-        
+    def get_distance(self, start, end):
+        start_map = self.distance_table.get(start)
+        if start_map is not None:
+            return start_map.get(end)
+        return None        
+            
         
         
         
