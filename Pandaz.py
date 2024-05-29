@@ -54,7 +54,7 @@ class Pandaz(object):
                     row_map.add(headers[i], float(row[i]))
             distance_map.add(row[0], row_map)
         #print(type(distance_map))
-        distance_map.print_map()
+        #distance_map.print_map()  removed 5/29
         return distance_map
         
     @staticmethod

@@ -37,7 +37,7 @@ def main():
     
     truck_one = Truck()
     truck_one.distance_table = Pandaz.read_csv("Real_Distance_table.csv")
-    print(f"distance table type: {type(truck_one.distance_table)}")
+    #print(f"distance table type: {type(truck_one.distance_table)}")
     #print("distance table data: " + truck_one.distance_table.print_map())
     truck_two = Truck()
     truck_two.distance_table = Pandaz.read_csv("Real_Distance_table.csv")

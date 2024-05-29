@@ -41,7 +41,7 @@ class HashMap: #custom defined hash map data strucutre to store package info
 
                 if int(value_pair[0]) == key:
                    # print("inside get function")
-
+                    print(value_pair[1])
                     return value_pair[1]
         return None
     

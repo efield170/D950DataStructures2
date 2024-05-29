@@ -28,15 +28,15 @@ class Truck: #I decided an OOP approach would be the easiest/cleanest method
        if self.air_manifest.is_empty() and self.driver_manifest.is_empty(): 
            return "HUB" #if both manifests are empty the route is finished and should return to the hub
 
-       if self.air_manifest.is_empty():      #if air is delivered start on ground
+       elif self.air_manifest.is_empty():      #if air is delivered start on ground
            shortest_distance = float('inf')  # Use positive infinity for initialization so first comparison is always true 
-           next_stop = None
+           #next_stop = None
 
            for key, package in self.driver_manifest:  #iterate over ground manifest to find the next shortest distance stop
                distance = Pandaz.get_distance(package.GetAddress(), self.current_location)
                if math.isnan(distance):
                    distance = self.get_distance(self.current_location, package.GetAddress())
-               if distance <= shortest_distance:
+               elif distance <= shortest_distance:
                    shortest_distance = distance
                    next_stop = package.GetPackageId()
 
@@ -51,13 +51,15 @@ class Truck: #I decided an OOP approach would be the easiest/cleanest method
            next_stop = None
            
            for key, package in self.air_manifest:
-               print(type(self.distance_table))
+               #print(type(self.distance_table)) removed 5/29
                distance = Pandaz.get_distance(package.GetAddress(), self.current_location)
                if math.isnan(distance):
                    distance = Pandaz.get_distance(self.current_location, package.GetAddress())
-               if distance <= shortest_distance:
+               elif distance <= shortest_distance:
                    shortest_distance = distance
-                   next_stop = package.GetPackageId()
+                   print(package.GetPackageId())
+                   next_stop = package.GetPackageId() #possible issue here or on line 63
+                   print(self.air_manifest.get(next_stop)) #not returning address
                    
            if next_stop in self.air_manifest:
                new_address = self.air_manifest.get(next_stop)
@@ -94,7 +96,7 @@ class Truck: #I decided an OOP approach would be the easiest/cleanest method
         distance = Pandaz.get_distance(nextStop, self.current_location)
         if distance is None or math.isnan(distance): #find the distance between the two stops by finding which orientation provides a value
             distance = Pandaz.get_distance(self.current_location, nextStop)
-        if distance > 0: #if distance is not negative update time elapsed, current stop and miles
+        elif distance > 0: #if distance is not negative update time elapsed, current stop and miles
             self.miles_driven += distance
             self.current_location = nextStop
             drive_time = dt.timedelta(hours = distance / 18)
@@ -113,6 +115,7 @@ class Truck: #I decided an OOP approach would be the easiest/cleanest method
                 self.drive_to_stop(next_stop)
                 break #escape loop and stop tracking info when you return to hub and day is up
             else:
+                print(self.find_next_stop())
                 self.complete_stop(next_stop)
                 
                 
